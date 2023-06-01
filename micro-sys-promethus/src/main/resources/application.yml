@@ -1,2 +1,15 @@
 server:
   port: 9001
+spring:
+  application:
+    name: demo-proj
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
