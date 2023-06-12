@@ -1,12 +1,9 @@
 package com.broken.line.controller;
 
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.Metrics;
+import com.broken.line.component.CustomizeMetric;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 /**
  * @author: wanjia1
@@ -16,14 +13,17 @@ import java.time.LocalDateTime;
 @RestController
 public class DemoController {
 
+    /**
+     * https://blog.csdn.net/qq_23056495/article/details/108010315 @Timed 使用方案
+     */
+    @CustomizeMetric("customize API")
     @GetMapping("/counter")
-    public void counter() {
-        log.info("into request");
+    public String counter() {
+        log.info("{} into request", Thread.currentThread().getName());
         int num = (int) (Math.random() * 11);
-        if (num <= 5) {
-            log.warn("waring warning {}", LocalDateTime.now());
-            final Counter counter = Metrics.counter("customize.count", "error", "count");
-            counter.increment();
+        if (num > 3 && num <= 5) {
+            throw new RuntimeException("exception here");
         }
+        return String.valueOf(num);
     }
 }
