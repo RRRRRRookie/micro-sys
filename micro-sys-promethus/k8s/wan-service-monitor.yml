@@ -1,0 +1,13 @@
+prometheus:
+  additionalServiceMonitors:
+    - name: "wan-dev"
+      selector:
+        matchLabels:
+          svc: wan-dev
+      namespaceSelector:
+        matchNames:
+          - default
+      endpoints:
+        - port: http
+          path: /actuator/prometheus
+          scheme: http

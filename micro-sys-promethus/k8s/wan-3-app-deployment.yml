@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wan-dev-3-app
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wan-dev-3-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: wan-dev-3-app
+    spec:
+      containers:
+        - name: wan-dev-3
+          image: wanjia1/prometheus-demo:2.0
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wan-dev-3-service
+  labels:
+    svc: wan-dev
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: wan-dev-3-app
+

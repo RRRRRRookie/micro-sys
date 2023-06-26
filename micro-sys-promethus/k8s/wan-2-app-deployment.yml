@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wan-dev-2
+  labels:
+    name: wan-dev-2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wan-dev-2-app
+  namespace: wan-dev-2
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wan-dev-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: wan-dev-2
+    spec:
+      containers:
+        - name: wan-dev-2
+          image: wanjia1/prometheus-demo:1.0
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wan-dev-2-service
+  namespace: wan-dev-2
+  labels:
+    svc: wan-dev
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: wan-dev-2-app
