@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: base-test-config
+  namespace: dev
+data:
+  spring.cloud.gateway.routes:
+    - id: insightweblandingsvc
+      uri: http://insight-web-landing-svc:8080
+      predicates:
+        - Path=/landing/**
+      filters:
+        - StripPrefix= '1'
+    - id: insightweblandingsvc
+      uri: http://insight-web-landing-svc:8080
+      predicates:
+        - Path=/landing/**
+      filters:
+        - StripPrefix='3'
