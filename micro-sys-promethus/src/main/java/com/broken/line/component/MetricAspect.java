@@ -86,6 +86,8 @@ public class MetricAspect {
         counter.increment();
     }
 
+
+    // counter increase(method_success_counter_total{application="demo-proj",method_name="counter",}[2m])
     @AfterThrowing(pointcut = "@annotation(customizeMetric)", throwing = "throwable")
     public void afterThrowing(JoinPoint joinPoint, CustomizeMetric customizeMetric, Throwable throwable) {
         log.info("after throw advice {}", Thread.currentThread().getName());
