@@ -1,0 +1,10 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: demo-k8s
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'prometheus,health'
